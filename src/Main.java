@@ -44,7 +44,29 @@ public class Main
 			"ERROR"			// 33
 	};
 
-	static public void main(String argv[])
+	static private void overwriteOutputFile(String filename) throws IOException {
+		System.out.println("Error encountered, overwriting file");
+		PrintWriter fw = new PrintWriter(filename);
+		fw.print("ERROR");
+		fw.close();
+	}
+
+	static private boolean numIsValid(Object numberAsObject) {
+		int number;
+		try{
+			String numberAsString = numberAsObject.toString();
+			if (numberAsString.length() >= 10) { // Larger than 1 billion
+				return false;
+			}
+			number = Integer.parseInt(numberAsString);
+			return (0 <= number) && (number <= MAX_NUMBER);
+		}
+		catch (Exception e){ // length check to prevent overflow
+			return false;
+		}
+	}
+
+	static public void main(String argv[]) throws IOException
 	{
 		Lexer l;
 		Symbol s;
@@ -52,74 +74,101 @@ public class Main
 		PrintWriter fileWriter;
 		String inputFileName = argv[0];
 		String outputFileName = argv[1];
-		
-		try
-		{
-			/********************************/
-			/* [1] Initialize a file reader */
-			/********************************/
-			fileReader = new FileReader(inputFileName);
+		boolean err = false;
 
-			/********************************/
-			/* [2] Initialize a file writer */
-			/********************************/
-			fileWriter = new PrintWriter(outputFileName);
-			
-			/******************************/
-			/* [3] Initialize a new lexer */
-			/******************************/
-			l = new Lexer(fileReader);
+		/********************************/
+		/* [1] Initialize a file reader */
+		/********************************/
+		fileReader = new FileReader(inputFileName);
 
-			/***********************/
-			/* [4] Read next token */
-			/***********************/
+		/********************************/
+		/* [2] Initialize a file writer */
+		/********************************/
+		fileWriter = new PrintWriter(outputFileName);
+
+		/******************************/
+		/* [3] Initialize a new lexer */
+		/******************************/
+		l = new Lexer(fileReader);
+
+		/***********************/
+		/* [4] Read next token */
+		/***********************/
+		try {
 			s = l.next_token();
+		}
+		catch (Error e) {
+			l.yyclose();
+			file_writer.close();
+			overwriteOutputFile(outputFilename);
+			return;
+		}
+		/********************************/
+		/* [5] Main reading tokens loop */
+		/********************************/
+		while (s.sym != TokenNames.EOF)
+		{
+			/************************/
+			/* [6] Print to console */
+			/************************/
+			String tokenType = id_to_name[s.sym];
+			System.out.println(tokenType);
+			if (tokenType.equals("ERROR")){
+				err = true;
+				break;
+			}
+			file_writer.print(tokenType);
 
-			/********************************/
-			/* [5] Main reading tokens loop */
-			/********************************/
-			while (s.sym != TokenNames.EOF)
-			{
-				/************************/
-				/* [6] Print to console */
-				/************************/
-				System.out.print("[");
-				System.out.print(l.getLine());
-				System.out.print(",");
-				System.out.print(l.getTokenStartPosition());
-				System.out.print("]:");
-				System.out.print(s.value);
-				System.out.print("\n");
-				
-				/*********************/
-				/* [7] Print to file */
-				/*********************/
-				fileWriter.print(l.getLine());
-				fileWriter.print(": ");
-				fileWriter.print(s.value);
-				fileWriter.print("\n");
-				
-				/***********************/
-				/* [8] Read next token */
-				/***********************/
+			boolean isNumber = tokenType.equals("INT");
+			boolean isString = tokenType.equals("STRING");
+			boolean isID = tokenType.equals("ID");
+			if (isNumber || isString || isID) {
+				if (isNumber && !numIsValid(s.value)) {
+					fail = true;
+					break;
+				}
+				file_writer.print("(");
+				file_writer.print(s.value);
+				file_writer.print(")");
+			}
+			file_writer.print("[");
+			file_writer.print(l.getLine());
+			file_writer.print(",");
+			file_writer.print(l.getTokenStartPosition());
+			file_writer.print("]");
+			file_writer.print("\n");
+
+			/***********************/
+			/* [7] Read next token */
+			/***********************/
+			try {
 				s = l.next_token();
 			}
-			
-			/******************************/
-			/* [9] Close lexer input file */
-			/******************************/
-			l.yyclose();
-
-			/**************************/
-			/* [10] Close output file */
-			/**************************/
-			fileWriter.close();
-    	}
-			     
-		catch (Exception e)
-		{
-			e.printStackTrace();
+			catch (Error e) {
+				l.yyclose();
+				file_writer.close();
+				overwriteOutputFile(outputFilename);
+				return;
+			}
 		}
+
+		/******************************/
+		/* [8] Close lexer input file */
+		/******************************/
+		l.yyclose();
+
+		/**************************/
+		/* [9] Close output file */
+		/**************************/
+		fileWriter.close();
+
+		/*************************************/
+		/* [9] Overwrite in case of an error */
+		/*************************************/
+		if (err)
+			overwriteWithError(outputFilename);
+		else
+			System.out.println("Successful Lexical Analysis");
 	}
 }
 
