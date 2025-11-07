@@ -33,5 +33,6 @@ public interface TokenNames {
   public static final int INT = 30; // INT(value) - value is an int
   public static final int STRING = 31; // STRING(value) - value is a string
   public static final int ID = 32; // ID(value) - value is an id
+  public static final int ERROR = 23;
 }
 
