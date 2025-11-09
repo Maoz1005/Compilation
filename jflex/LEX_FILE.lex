@@ -78,16 +78,12 @@ INTEGER			= 0 | [1-9][0-9]*
 LETTER          = [a-zA-Z]
 ID				= {LETTER}([a-zA-Z0-9]*)
 STRING          = \"{LETTER}*\"  /* "Strings that contain non-letter characters are lexical errors" */
-BRACKET			= \( | \) | \[ | \] | \{ | \}
-MARK			= \? | \!
-OP				= \+ | \- | \* | \/
-DOT				= \. | \;
 T1_COMMENT 		= \/\/([a-zA-Z]|[0-9]|\(|\)|\[|\]|\{|\}|\?|\!|\+|\-|\*|\/|\.|\;|[ \t])*{LineTerminator}
 T1_ERROR        = \/\/([a-zA-Z]|[0-9]|\(|\)|\[|\]|\{|\}|\?|\!|\+|\-|\*|\/|\.|\;|[ \t])*
-T2_COMMENT		= "/*" ( [a-zA-Z0-9\s\t\r\n(){}\[\]?!+\-./;] | \*+[^*/] )* \*+ "/" /* NoS: (\*)? in case of single asterisk followed by no chars */
+T2_COMMENT		= "/*" ( [a-zA-Z0-9\s\t\r\n(){}\[\]?!+\-./;] | \*+[^*/] )* \*+ "/"
 T2_ERROR        = "/*" ( [a-zA-Z0-9\s\t\r\n(){}\[\]?!+\-./;] | \*+[^*/] )* (\*+)?
-SKIP  			= {WhiteSpace} | {T1_COMMENT} | {T2_COMMENT}
 COMMENT_ERROR   = {T1_ERROR} | {T2_ERROR}
+SKIP  			= {WhiteSpace} | {T1_COMMENT} | {T2_COMMENT}
 
 /******************************/
 /* DOLLAR DOLLAR - DON'T TOUCH! */
