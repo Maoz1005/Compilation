@@ -131,11 +131,11 @@ SKIP  			= {WhiteSpace} | {T1_COMMENT} | {T2_COMMENT}
     "new"               { return symbol(TokenNames.NEW); }                 // NEW: "new"
     "extends"           { return symbol(TokenNames.EXTENDS); }             // EXTENDS: "extends"
     "nil"               { return symbol(TokenNames.NIL); }                 // NIL: "nil"
-    {LEADING_ZERO}      { return symbol(TokenNames.ERROR); }
-    {INTEGER}			{ return symbol(TokenNames.INT, new Integer(yytext())); }
-    {STRING}			{ return symbol(TokenNames.STRING, new String(yytext()));}
-    {ID}				{ return symbol(TokenNames.ID, new String(yytext()));}
-    {SKIP}		        { /* just skip what was found, do nothing */ }
-    {COMMENT_ERROR}     { return symbol(TokenNames.ERROR); }
+    {LEADING_ZERO}      { return symbol(TokenNames.ERROR); }               // ERROR: Number with leading-zero
+    {INTEGER}			{ return symbol(TokenNames.INT, new Integer(yytext())); }   // INTEGER: Number with value (check range in Main)
+    {STRING}			{ return symbol(TokenNames.STRING, new String(yytext()));}  // String: String with value
+    {ID}				{ return symbol(TokenNames.ID, new String(yytext()));}      // ID: ID with value
+    {SKIP}		        { /* just skip what was found, do nothing */ }              // SKIP: Skip these tokens
+    {COMMENT_ERROR}     { return symbol(TokenNames.ERROR); }                        // ERROR: Comment error
     <<EOF>>				{ return symbol(TokenNames.EOF);}
 }
