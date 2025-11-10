@@ -71,21 +71,21 @@ import java_cup.runtime.*;
 /***********************/
 /* MACRO DECLARATIONS */
 /***********************/
-LineTerminator	= \r | \n | \r\n
-WhiteSpace		= {LineTerminator} | [\s\t]
-LEADING_ZERO 	= 0[0-9]+
-INTEGER			= 0 | [1-9][0-9]*
-LETTER          = [a-zA-Z]
-ID				= {LETTER}([a-zA-Z0-9]*)
-STRING          = \"{LETTER}*\"  /* "Strings that contain non-letter characters are lexical errors" */
-CommentAllowedWithNewline = [A-Za-z0-9 \t\r\n(){}\[\]?!+\-*/.;]
-CommentAllowedNoNewline   = [A-Za-z0-9 \t(){}\[\]?!+\-*/.;]
-T1_COMMENT 		= \/\/({CommentAllowedNoNewline})*{LineTerminator}
-T1_ERROR        = \/\/({CommentAllowedNoNewline} | [^A-Za-z0-9 \t\r\n(){}\[\]?!+\-*/.;])*{LineTerminator}
-T2_COMMENT		= "/*" ( [a-zA-Z0-9\s\t\r\n(){}\[\]?!+\-./;] | \*+[^*/] )* \*+ "/"
-T2_ERROR        = "/*" ( [a-zA-Z0-9\s\t\r\n(){}\[\]?!+\-./;] | \*+[^*/] )* (\*+)?
-COMMENT_ERROR   = {T1_ERROR} | {T2_ERROR}
-SKIP  			= {WhiteSpace} | {T1_COMMENT} | {T2_COMMENT}
+LineTerminator	            = \r | \n | \r\n
+WhiteSpace		            = {LineTerminator} | [\s\t]
+LEADING_ZERO 	            = 0[0-9]+
+INTEGER			            = 0 | [1-9][0-9]*
+LETTER                      = [a-zA-Z]
+ID				            = {LETTER}([a-zA-Z0-9]*)
+STRING                      = \"{LETTER}*\"  /* "Strings that contain non-letter characters are lexical errors" */
+CommentAllowedWithNewline   = [A-Za-z0-9 \t\r\n(){}\[\]?!+\-*/.;]
+CommentAllowedNoNewline     = [A-Za-z0-9 \t(){}\[\]?!+\-*/.;]
+T1_COMMENT 		            = \/\/({CommentAllowedNoNewline})*{LineTerminator}
+T1_ERROR                    = \/\/({CommentAllowedNoNewline} | [^A-Za-z0-9 \t\r\n(){}\[\]?!+\-*/.;])*{LineTerminator}
+T2_COMMENT		            = "/*" ( [a-zA-Z0-9\s\t\r\n(){}\[\]?!+\-./;] | \*+[^*/] )* \*+ "/"
+T2_ERROR                    = "/*" ( [a-zA-Z0-9\s\t\r\n(){}\[\]?!+\-./;] | \*+[^*/] )* (\*+)?
+COMMENT_ERROR               = {T1_ERROR} | {T2_ERROR}
+SKIP  			            = {WhiteSpace} | {T1_COMMENT} | {T2_COMMENT}
 
 /******************************/
 /* DOLLAR DOLLAR - DON'T TOUCH! */
@@ -140,4 +140,5 @@ SKIP  			= {WhiteSpace} | {T1_COMMENT} | {T2_COMMENT}
     {SKIP}              { /* just skip what was found, do nothing */}               // SKIP: Skip these tokens
     {COMMENT_ERROR}     { return symbol(TokenNames.ERROR); }                        // ERROR: Comment error
     <<EOF>>             { return symbol(TokenNames.EOF); }
+    .                   { return symbol(TokenNames.ERROR); }
 }
