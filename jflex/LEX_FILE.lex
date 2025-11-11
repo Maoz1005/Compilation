@@ -134,7 +134,18 @@ SKIP  			            = {WhiteSpace} | {T1_COMMENT} | {T2_COMMENT}
     "extends"           { return symbol(TokenNames.EXTENDS); }             // EXTENDS: "extends"
     "nil"               { return symbol(TokenNames.NIL); }                 // NIL: "nil"
     {LEADING_ZERO}      { return symbol(TokenNames.ERROR); }               // ERROR: Number with leading-zero
-    {INTEGER}           { return symbol(TokenNames.INT, new Integer(yytext())); }   // INTEGER: Number with value (check range in Main)
+    {INTEGER}           { int MAX_NUMBER = (int)Math.pow(2,15) - 1;  // Maximal int - 32767
+                          int number;
+                          try{
+                            String numberAsString = yytext();
+                            number = Integer.parseInt(numberAsString);
+                            if ((0 <= number) && (number <= MAX_NUMBER))
+                                return symbol(TokenNames.INT, new Integer(yytext()));
+                            else
+                                return symbol(TokenNames.ERROR);
+                          }
+                          catch (Exception e){
+                            return symbol(TokenNames.ERROR); } }                    // INTEGER: Number with value (check range in Main)
     {STRING}            { return symbol(TokenNames.STRING, new String(yytext()));}  // String: String with value
     {ID}                { return symbol(TokenNames.ID, new String(yytext()));}      // ID: ID with value
     {SKIP}              { /* just skip what was found, do nothing */}               // SKIP: Skip these tokens

@@ -4,8 +4,6 @@ import java_cup.runtime.Symbol;
 
 public class Main
 {
-	final static int MAX_NUMBER = (int)Math.pow(2,15) - 1;  // Maximal int
-
 	public static final String[] id_to_name = { /* Array mapping token IDs to their names */
 			"EOF",          // 0
 			"LPAREN",       // 1
@@ -48,21 +46,6 @@ public class Main
 		PrintWriter fw = new PrintWriter(filename);
 		fw.print("ERROR");
 		fw.close();
-	}
-
-	static private boolean numIsValid(Object numberAsObject) {
-		int number;
-		try{
-			String numberAsString = numberAsObject.toString();
-			if (numberAsString.length() >= 10) { // Larger than 1 billion
-				return false;
-			}
-			number = Integer.parseInt(numberAsString);
-			return (0 <= number) && (number <= MAX_NUMBER);
-		}
-		catch (Exception e){ // length check to prevent overflow
-			return false;
-		}
 	}
 
 	static public void main(String argv[]) throws IOException
@@ -137,10 +120,6 @@ public class Main
 			boolean isString = tokenType.equals("STRING");
 			boolean isID = tokenType.equals("ID");
 			if (isNumber || isString || isID) {
-				if (isNumber && !numIsValid(s.value)) {
-					err = true;
-					break;
-				}
 				fileWriter.print("(");
 				fileWriter.print(s.value);
 				fileWriter.print(")");
