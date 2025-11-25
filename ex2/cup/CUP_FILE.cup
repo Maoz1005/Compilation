@@ -133,9 +133,7 @@ precedence left PLUS;
 precedence left MINUS;
 precedence left TIMES;
 precedence left DIVIDE;
-// precedence left RBRACK;
 precedence left LBRACK;
-// precedence left RPAREN;
 precedence left LPAREN;
 precedence left DOT;
 

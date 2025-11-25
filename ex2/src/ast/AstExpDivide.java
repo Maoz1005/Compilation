@@ -7,6 +7,7 @@ public class AstExpDivide extends AstExp
 {
 	public AstExp left;
 	public AstExp right;
+	public AstBinop op;
 	
 	public AstExpDivide(AstExp left, AstExp right)
 	{
@@ -14,6 +15,7 @@ public class AstExpDivide extends AstExp
 
 		this.left = left;
 		this.right = right;
+		this.op = new AstBinop("/");
 	}
 
 	@Override
@@ -22,6 +24,6 @@ public class AstExpDivide extends AstExp
 	}
 	@Override
 	protected List<? extends AstNode> GetChildren() {
-		return Arrays.asList(left, right);
+		return Arrays.asList(left, op,  right);
 	}
 }
