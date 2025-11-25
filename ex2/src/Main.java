@@ -50,9 +50,9 @@ public class Main{
 			ast = (AstProgram) p.parse().value;
 			writeStatusToFile("OK", outputFileName); // if it makes it to this line, parsing succeeded
 
-//			/*************************/
-//			/* [6] Print the AST ... */
-//			/*************************/
+			/*************************/
+			/* [6] Print the AST ... */
+			/*************************/
 			ast.PrintMe();
 
 			/*************************/
@@ -60,9 +60,9 @@ public class Main{
 			/*************************/
 			fileWriter.close();
 
-//			/*************************************/
-//			/* [8] Finalize AST GRAPHIZ DOT file */
-//			/*************************************/
+			/*************************************/
+			/* [8] Finalize AST GRAPHIZ DOT file */
+			/*************************************/
 			AstGraphviz.getInstance().finalizeFile();
 		}
 		catch (Exception e) {
