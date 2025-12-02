@@ -1,5 +1,8 @@
 package ast;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class AstStmtWhile extends AstStmt
 {
 	public AstExp cond;
@@ -10,7 +13,18 @@ public class AstStmtWhile extends AstStmt
 	/*******************/
 	public AstStmtWhile(AstExp cond, AstStmtList body)
 	{
+		super("stmt -> WHILE LPAREN exp RPAREN LBRACE stmtlist RBRACE");
 		this.cond = cond;
 		this.body = body;
+	}
+
+	@Override
+	protected String GetNodeName() {
+		return "WHILE\n(COND) {BODY}";
+	}
+
+	@Override
+	protected List<? extends AstNode> GetChildren() {
+		return Arrays.asList(cond, body);
 	}
 }

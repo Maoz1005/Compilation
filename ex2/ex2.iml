@@ -7,6 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="external_jars3" level="project" />
     <orderEntry type="library" name="external_jars" level="project" />
+    <orderEntry type="library" name="external_jars2" level="project" />
   </component>
 </module>

@@ -1,0 +1,6 @@
+class Father { // ERROR
+    int foo;
+}
+class Son extends Father {
+    string foo;
+}

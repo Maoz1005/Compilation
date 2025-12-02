@@ -1,5 +1,8 @@
 package ast;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class AstNode
 {
 	/*******************************************/
@@ -8,7 +11,37 @@ public abstract class AstNode
 	/* a graphviz dot format of the AST ...    */
 	/*******************************************/
 	public int serialNumber;
-	
+
+	public AstNode(String derivation) {
+		/******************************/
+		/* SET A UNIQUE SERIAL NUMBER */
+		/******************************/
+		serialNumber = AstNodeSerialNumber.getFresh();
+
+		/***************************************/
+		/* PRINT CORRESPONDING DERIVATION RULE */
+		/***************************************/
+		System.out.println("====================== " + derivation);
+	}
+
+	public abstract Type SemantMe();
+
+	protected abstract String GetNodeName();
+
+	protected List<? extends AstNode> GetChildren() { return Arrays.asList(); }
+
+	public final void PrintMe(){
+		// print me, add me as a node, do the same to my children, log the edges to them
+		System.out.println("next node: \n***\n" + GetNodeName() + "\n***");
+
+		AstGraphviz.getInstance().logNode( serialNumber, GetNodeName());
+
+		for (AstNode child : GetChildren()){
+			child.PrintMe();
+			AstGraphviz.getInstance().logEdge(serialNumber, child.serialNumber);
+		}
+	}
+
 	/***********************************************/
 	/* The default message for an unknown AST node */
 	/***********************************************/

@@ -1,0 +1,9 @@
+int main() {
+    int x := 10;
+    int y;
+    while (x < 10) {
+        y := 10;
+        PrintInt(y);
+    }
+    PrintInt(y);
+}

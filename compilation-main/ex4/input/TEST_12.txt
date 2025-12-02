@@ -1,0 +1,9 @@
+void main() {
+    int x := 10;
+    while (x < 10) { // y UNINIT MAXINT   union   y INIT 4    result will be y INIT MAXINT
+        int y := 10;
+        PrintInt(y);
+    }
+    int y;
+    PrintInt(y);
+}

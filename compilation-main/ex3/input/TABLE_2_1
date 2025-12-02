@@ -1,0 +1,6 @@
+class Father { // ERROR
+    int foo() { return 8; }
+}
+class Son extends Father {
+    void foo() { PrintInt(8); }
+}

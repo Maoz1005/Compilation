@@ -1,0 +1,16 @@
+# List of files we shouldn't commit
+instructions/
+ex1/LEXER
+ex1/output/
+ex2/Makefile
+ex3/Makefile
+ex3/output/
+# ^ We don't need to submit the output right? TODO
+
+usefuls/for_myself.txt
+
+
+# Neri's
+
+
+# Rotem's

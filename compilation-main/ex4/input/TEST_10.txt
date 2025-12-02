@@ -1,0 +1,8 @@
+void main() {
+    int x;
+    x := 10;
+    if (x < 10) {
+        int x;
+    } // x is always initialized here!
+    PrintInt(x);
+}

@@ -1,50 +1,28 @@
 package ast;
 
-public class AstStmtReturn extends AstStmt
-{
-	/****************/
-	/* DATA MEMBERS */
-	/****************/
-	public AstExp exp;
+import java.util.Arrays;
+import java.util.List;
 
-	/*******************/
-	/*  CONSTRUCTOR(S) */
-	/*******************/
-	public AstStmtReturn(AstExp exp)
-	{
-		/******************************/
-		/* SET A UNIQUE SERIAL NUMBER */
-		/******************************/
-		serialNumber = AstNodeSerialNumber.getFresh();
+public class AstStmtReturn extends AstStmt {
+  public AstExp exp;
 
-		this.exp = exp;
-	}
+  public AstStmtReturn(AstExp exp){
+    super("stmt -> RETURN exp");
+    this.exp = exp;
+  }
 
-	/********************************************************/
-	/* The printing message for a return statement AST node */
-	/********************************************************/
-	public void printMe()
-	{
-		/***********************************/
-		/* AST NODE TYPE = AST RETURN STMT */
-		/***********************************/
-		System.out.print("AST NODE STMT RETURN\n");
+  public AstStmtReturn(){
+    super("stmt -> RETURN");
+  }
 
-		/*****************************/
-		/* RECURSIVELY PRINT exp ... */
-		/*****************************/
-		if (exp != null) exp.printMe();
+  @Override
+  public String GetNodeName(){
+    return "RETURN";
+  }
 
-		/***************************************/
-		/* PRINT Node to AST GRAPHVIZ DOT file */
-		/***************************************/
-		AstGraphviz.getInstance().logNode(
-                serialNumber,
-			"RETURN");
-
-		/****************************************/
-		/* PRINT Edges to AST GRAPHVIZ DOT file */
-		/****************************************/
-		if (exp != null) AstGraphviz.getInstance().logEdge(serialNumber,exp.serialNumber);
-	}
+  @Override
+  public List<? extends AstNode> GetChildren(){
+    if (exp == null) return Arrays.asList();
+    return Arrays.asList(exp);
+  }
 }

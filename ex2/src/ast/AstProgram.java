@@ -11,6 +11,13 @@ public class AstProgram extends AstNode{
     }
 
     @Override
+    public TYPE SemantMe() {
+        for (AST_DEC dec : declarations)
+            dec.SemantMe();
+        return null;
+    }
+
+    @Override
     protected String GetNodeName() {
         return "PROGRAM\nDECLARATIONS";
     }

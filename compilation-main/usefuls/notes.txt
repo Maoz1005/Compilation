@@ -1,0 +1,3 @@
+To run udocker on nova:
+setenv UDOCKER_DIR /vol/csrepo/
+udocker run --bindhome compiler_course
