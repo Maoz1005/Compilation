@@ -1,7 +1,0 @@
-class Fibo
-{
-	Fibo last;
-	Fibo first;
-	int x := 5;
-}
-

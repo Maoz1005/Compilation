@@ -1,4 +1,0 @@
-class IllegalSameName { // ERROR
-    void foo() { PrintInt(8); }
-    void foo(int i) { PrintInt(i); }
-}

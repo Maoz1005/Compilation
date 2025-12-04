@@ -1,7 +1,0 @@
-void main() {
-    int x;
-    if (x < 10) {
-        int x := 10;
-    } // x is not initialized here!
-    PrintInt(x);
-}

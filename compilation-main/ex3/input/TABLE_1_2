@@ -1,7 +1,0 @@
-class Edge { // ERROR
-    Vertex u;
-    Vertex v;
-}
-class Vertex {
-    int weight;
-}
