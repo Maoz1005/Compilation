@@ -7,7 +7,7 @@ import types.TypeNil;
 import java.util.List;
 
 public class Utils {
-    static boolean matchTypesArgsParams(List<Type> argsTypes, List<Type> paramsTypes) {
+    public static boolean matchTypesArgsParams(List<Type> argsTypes, List<Type> paramsTypes) {
         if (argsTypes.size() != paramsTypes.size()) { return false; }
         for (int i = 0; i < argsTypes.size(); i++) {
             Type currentArgument = argsTypes.get(i);
