@@ -1,9 +1,6 @@
 package ast;
 
-import types.Type;
-import types.TypeClass;
-import types.TypeInt;
-import types.TypeNil;
+import types.*;
 
 import java.util.Arrays;
 import java.util.List;

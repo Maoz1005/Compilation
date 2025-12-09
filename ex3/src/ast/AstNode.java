@@ -71,14 +71,14 @@ public abstract class AstNode
 		throw new SemanticException(info, lineNum + 1); // +1 since cup's line counter starts on 0
 	}
 
-	public final void PrintMe(){
+	public final void printMe(){
 		// print me, add me as a node, do the same to my children, log the edges to them
 		System.out.println("next node: \n***\n" + GetNodeName() + "\n***");
 
 		AstGraphviz.getInstance().logNode( serialNumber, GetNodeName());
 
 		for (AstNode child : GetChildren()){
-			child.PrintMe();
+			child.printMe();
 			AstGraphviz.getInstance().logEdge(serialNumber, child.serialNumber);
 		}
 	}
@@ -86,7 +86,7 @@ public abstract class AstNode
 	/***********************************************/
 	/* The default message for an unknown AST node */
 	/***********************************************/
-	//	public void printMe()
+	//	public void PrintMe()
 	//	{
 	//		System.out.print("AST NODE UNKNOWN\n");
 	//	}

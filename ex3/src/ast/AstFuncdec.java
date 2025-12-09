@@ -51,7 +51,7 @@ public class AstFuncdec extends AstDec {
         if (symbolTable.getExpectedReturnType() != null)
             throwException("Nested function declaration");
 
-        Type returnType = returnType.SemantMe();
+        Type returnType = this.returnType.SemantMe();
         List<Type> paramTypes = new ArrayList<>();
         TypeFunction thisType = new TypeFunction(returnType, id, paramTypes);
         tryTableEnter(id, thisType);

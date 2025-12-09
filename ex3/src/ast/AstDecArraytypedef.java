@@ -1,6 +1,6 @@
 package ast;
 
-import types.Type;
+import types.*;
 import symboltable.*;
 
 import java.util.Arrays;

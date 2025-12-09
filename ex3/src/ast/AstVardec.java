@@ -17,7 +17,7 @@ public class AstVardec extends AstDec{
   }
 
   // this also accepts newExp (since it inherits from exp) - surely this will have no consequences whatsoever
-  public AstVardec(AstType type, String id, AstExp exp, , int lineNum){
+  public AstVardec(AstType type, String id, AstExp exp, int lineNum){
     super("varDec -> type ID ASSIGN exp SEMICOLON", lineNum); // int x := exp;
     this.type = type;
     this.id = id;
@@ -37,8 +37,8 @@ public class AstVardec extends AstDec{
 
   @Override
   public Type SemantMe() {
-    Type vartype = typeNode.SemantMe();
-    if (vartype instanceof typeVoid) {
+    Type vartype = type.SemantMe();
+    if (vartype instanceof TypeVoid) {
       throwException("Cannot declare void type variables.");
     } 
 
