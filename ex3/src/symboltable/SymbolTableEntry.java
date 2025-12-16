@@ -6,7 +6,7 @@ package symboltable;
 /*******************/
 /* PROJECT IMPORTS */
 /*******************/
-import types.*;
+import types.Type;
 
 /**********************/
 /* SYMBOL TABLE ENTRY */

@@ -13,7 +13,15 @@ import java.util.List;
 /*******************/
 /* PROJECT IMPORTS */
 /*******************/
-import types.*;
+import types.Type;
+import types.TypeClass;
+import types.TypeClassMemberDec;
+import types.TypeForScopeBoundaries;
+import types.TypeFunction;
+import types.TypeInt;
+import types.TypeNil;
+import types.TypeString;
+import types.TypeVoid;
 
 /****************/
 /* SYMBOL TABLE */
