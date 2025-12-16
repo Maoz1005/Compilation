@@ -27,7 +27,7 @@ public class AstCfieldVar extends AstCfield {
 
     @Override
     public Type SemantMe() {
-        if (varDec.exp != null && !varDec.exp.isConstant()){ // TODO: is it necessary?
+        if (varDec.exp != null && !varDec.exp.isConstant()){
             throwException("Field may only be initialized with a constant value.");
         }
         return varDec.SemantMe();

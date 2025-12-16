@@ -82,12 +82,5 @@ public abstract class AstNode
 			AstGraphviz.getInstance().logEdge(serialNumber, child.serialNumber);
 		}
 	}
-	// TODO: combine those 'PrintMe' functions
-	/***********************************************/
-	/* The default message for an unknown AST node */
-	/***********************************************/
-	//	public void PrintMe()
-	//	{
-	//		System.out.print("AST NODE UNKNOWN\n");
-	//	}
+
 }

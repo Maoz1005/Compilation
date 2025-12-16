@@ -32,7 +32,7 @@ public class AstVarSubscript extends AstVar
 		return "SUBSCRIPT\nVAR\n...[...]";
 	}
 
-	public Type SemantMe() { // TODO: Has to be an array, right?
+	public Type SemantMe() {
 		Type subscriptType = subscript.SemantMe();
 
 		if (!(subscriptType instanceof TypeInt)) { // Note: doesn't seem like you need to validate indices.

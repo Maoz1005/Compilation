@@ -61,7 +61,6 @@ public class Main
 			}
 			catch (Exception e) {
 				if (e instanceof SemanticException) {
-					// TODO When there is a syntax or semantic error: ERROR(location) and handling of all cases
 					SemanticException se = (SemanticException) e;
 					writeStatusToFile(se.getLineNumber(), "ERROR", outputFileName);
 				}
