@@ -2,6 +2,7 @@ package ir;
 
 import temp.*;
 
+// TODO do we need this class?
 public class IrCommandDivide extends IrCommandBinop {
     public Temp t1;
     public Temp t2;
