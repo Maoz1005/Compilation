@@ -1,16 +1,24 @@
 import java.io.*;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import ir.Ir;
 import java_cup.runtime.Symbol;
 import ast.*;
 
 public class Main
 {
+	public static String outputFileName = null;
+
 	static public void main(String argv[])
 	{
 		Lexer l;
 		Parser p;
 		Symbol s;
 		AstDecList ast;
+		CFG cfg;
 		FileReader fileReader;
 		PrintWriter fileWriter;
 		String inputFileName = argv[0];
@@ -57,6 +65,9 @@ public class Main
 			/* [8] IR the AST ... */
 			/**********************/
 			ast.irMe();
+			cfg = new CFG(Ir.getInstance().getCommands());
+			writeUndeclaredToFile(cfg, outputFileName);
+			System.out.println("End of declaration analysis");
 
 			/**************************/
 			/* [9] Close output file */
@@ -71,6 +82,36 @@ public class Main
 
 		catch (Exception e)
 		{
+			e.printStackTrace();
+		}
+	}
+
+	public static void writeUndeclaredToFile(CFG cfg, String path) {
+		int undeclaredCount = cfg.uninitializedVars.size();
+		try {
+			FileWriter fw = new FileWriter(path);
+			BufferedWriter writer = new BufferedWriter(fw);
+			if (undeclaredCount == 0) {
+				writer.write("!OK");
+				System.out.println("\n ALL VARIABLES DECLARED!");
+			}
+			else {
+				System.out.println("\n UNDECLARED VARIABLES:");
+				List<String> undeclaredVars = new ArrayList<>(cfg.uninitializedVars);
+				Collections.sort(undeclaredVars); // Lex sort apparently
+				for (int i = 0; i < undeclaredVars.size(); i++) {
+					String undeclaredVar = undeclaredVars.get(i);
+					System.out.println(undeclaredVar);
+					writer.write(undeclaredVar);
+					if (i < undeclaredVars.size() - 1) {
+						writer.write("\n");
+					}
+				}
+			}
+			writer.close();
+		}
+		catch (IOException e) {
+			System.out.println("ERROR WHEN OPENING FILE.");
 			e.printStackTrace();
 		}
 	}
