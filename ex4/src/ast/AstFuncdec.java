@@ -3,6 +3,9 @@ package ast;
 import symboltable.SymbolTable;
 import types.Type;
 import types.TypeFunction;
+import temp.Temp;
+import ir.Ir;
+import ir.IrCommandLabel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,5 +73,17 @@ public class AstFuncdec extends AstDec {
         symbolTable.endScope();
 
         return thisType;
+    }
+
+    public Temp IRme() {
+        String funcName = "MAIN";
+        Ir.getInstance().AddIrCommand(new IrCommandLabel(funcName));
+        
+        if (statements != null) {
+            statements.IRme();
+        }
+
+        Ir.getInstance().AddIrCommand(new IrCommandLabel(funcName + "END"));
+        return null;
     }
 }

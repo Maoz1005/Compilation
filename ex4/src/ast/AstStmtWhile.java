@@ -4,6 +4,13 @@ import symboltable.SymbolTable;
 import types.Type;
 import types.TypeInt;
 
+import temp.Temp;
+import ir.Ir;
+import ir.IrCommand;
+import ir.IrCommandJumpIfEqZero;
+import ir.IrCommandLabel;
+import ir.IrCommandJumpLabel;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,6 +55,27 @@ public class AstStmtWhile extends AstStmt
 		}
 
 		symbolTable.endScope();
+		return null;
+	}
+
+	/**
+	 * START: condition
+	 * 		  <body>
+	 * 		  goto START
+	 * END: <rest of code>
+	 */
+	@Override
+	public Temp IRme() {
+		String label_end = IrCommand.getFreshLabel("end");
+		String label_start = IrCommand.getFreshLabel("start");
+
+		Ir.getInstance().AddIrCommand(new IrCommandLabel(label_start));
+		Temp cond_temp = cond.IRme();
+		Ir.getInstance().AddIrCommand(new IrCommandJumpIfEqZero(cond_temp,label_end)); /* [4] Jump conditionally to the loop end */
+		body.IRme();
+		Ir.getInstance().AddIrCommand(new IrCommandJumpLabel(label_start)); /* [6] Jump to the loop entry */
+		Ir.getInstance().AddIrCommand(new IrCommandLabel(label_end)); /* [7] Loop end label */
+
 		return null;
 	}
 }

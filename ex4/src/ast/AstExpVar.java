@@ -1,6 +1,7 @@
 package ast;
 
 import types.Type;
+import temp.Temp;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,11 @@ public class AstExpVar extends AstExp
 
 	public Type SemantMe() {
 		return this.var.SemantMe();
+	}
+
+	@Override
+	public Temp IRme() {
+		return var.IRme();
 	}
 
 	@Override

@@ -5,6 +5,10 @@ import types.TypeArray;
 import types.TypeClass;
 import types.TypeNil;
 
+import temp.Temp;
+import ir.Ir;
+import ir.IrCommandStore;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -82,4 +86,16 @@ public class AstStmtAssign extends AstStmt
 		}
 	}
 	
+	@Override
+	public Temp IRme() {
+		Temp src = exp.IRme();
+
+		if (var instanceof AstVarSimple simplevar){
+			Ir.getInstance().AddIrCommand( new IrCommandStore(simplevar.name, src));
+		}
+
+
+		return null;
+	}
+
 }

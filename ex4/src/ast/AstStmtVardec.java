@@ -1,6 +1,7 @@
 package ast;
 
 import types.Type;
+import temp.Temp;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +26,11 @@ public class AstStmtVardec extends AstStmt {
 
     @Override public Type SemantMe() {
         return dec.SemantMe();
+    }
+
+    @Override
+    public Temp IRme() {
+        return dec.IRme();
     }
 
 }

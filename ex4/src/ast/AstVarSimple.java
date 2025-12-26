@@ -1,6 +1,9 @@
 package ast;
 
 import types.Type;
+import temp.Temp;
+import ir.Ir;
+import ir.IrCommandLoad;
 
 public class AstVarSimple extends AstVar
 {
@@ -25,6 +28,12 @@ public class AstVarSimple extends AstVar
 
 	public Type SemantMe() {
 		return tryTableFind(this.name);
+	}
+
+	public Temp IRme() {
+		Temp t = new TEMP();
+		Ir.getInstance().AddIrCommand(new IrCommandLoad(t,name));
+		return t;
 	}
 
 }

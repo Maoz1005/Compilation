@@ -1,6 +1,7 @@
 package ast;
 
 import types.Type;
+import temp.Temp;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,4 +45,11 @@ public class AstStmtList extends AstNode
 		}
 		return null; // A sequence of statements doesn't have a type.
 	}	
+
+	public Temp IRme() {
+		if (head != null) head.IRme();
+		if (tail != null) tail.IRme();
+
+		return null;
+	}
 }
