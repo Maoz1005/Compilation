@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ir.Ir;
+import cfg.CFG
 import java_cup.runtime.Symbol;
 import ast.*;
 
