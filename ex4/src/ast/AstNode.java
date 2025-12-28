@@ -3,6 +3,7 @@ package ast;
 import errors.SemanticException;
 import symboltable.SymbolTable;
 import types.Type;
+import temp.Temp;
 
 import java.util.Arrays;
 import java.util.List;
@@ -81,6 +82,11 @@ public abstract class AstNode
 			child.printMe();
 			AstGraphviz.getInstance().logEdge(serialNumber, child.serialNumber);
 		}
+	}
+
+	public Temp IRme() {
+		System.out.println("Activated unknown IR conversion on " + GetNodeName());
+		return null;
 	}
 
 }

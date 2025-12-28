@@ -10,19 +10,17 @@ import java.util.List;
 import static utils.Utils.matchTypesArgsParams;
 
 public class AstStmtFunc extends AstStmt {
-    public String id;
-    public List<AstExp> args;
+    public AstExpFunc func;
+
 
     public AstStmtFunc(String id, NodeList<AstExp> args, int lineNum) {
         super("stmt -> ID LPAREN (exp (COMMA exp)*)? RPAREN SEMICOLON", lineNum); // ID(exp, exp, ...);
-        this.id = id;
-        this.args = args.unroll();
+        this.func = new AstExpFunc(id, args, lineNum);
     }
 
     public AstStmtFunc(String id, int lineNum){
         super("stmt -> ID LPAREN RPAREN SEMICOLON", lineNum); // ID();
-        this.id = id;
-        this.args = Arrays.asList();
+        this.func = new AstExpFunc(id, lineNum);
     }
 
     @Override
@@ -36,30 +34,13 @@ public class AstStmtFunc extends AstStmt {
     }
 
     public Type SemantMe() {
-        List<Type> argumentTypes = expsToList();
-        Type type = tryTableFind(this.id);
-
-        if (!(type instanceof TypeFunction)) { 
-            throwException("Attempt to call to something that's not a function."); 
-        }
-
-        TypeFunction functionData = (TypeFunction)type;
-
-        List<Type> functionParamTypes = functionData.params;
-        boolean argsAreValid = matchTypesArgsParams(argumentTypes, functionParamTypes);
-
-        if (!argsAreValid) { 
-            throwException("Mismatch between arguments and parameters."); 
-        }
-
+        func.SemantMe();
         return null;
     }
 
-    private List<Type> expsToList() {
-        List<Type> argumentTypes = new ArrayList<>();
-        for (AstExp expression : args) {
-            argumentTypes.add(expression.SemantMe());
-        }
-        return argumentTypes;
+
+    @Override
+    public Temp IRme() {
+        return func.IRme();
     }
 }

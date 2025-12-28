@@ -1,6 +1,7 @@
 package ast;
 
 import types.Type;
+import temp.Temp;
 
 import java.util.List;
 
@@ -27,5 +28,12 @@ public class AstProgram extends AstNode{
     @Override
     protected List<? extends AstNode> GetChildren() {
         return declarations;
+    }
+
+    @Override
+    public Temp IRme() {
+        for (AstDec dec: declarations) dec.IRme();
+
+        return null;
     }
 }
