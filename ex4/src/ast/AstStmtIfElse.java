@@ -4,6 +4,13 @@ import symboltable.SymbolTable;
 import types.Type;
 import types.TypeInt;
 
+import temp.Temp;
+import ir.Ir;
+import ir.IrCommand;
+import ir.IrCommandLabel;
+import ir.IrCommandJumpIfEqZero;
+import ir.IrCommandJumpLabel;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,6 +63,25 @@ public class AstStmtIfElse extends AstStmt
         }
 
         symbolTable.endScope();
+		return null;
+	}
+
+	public Temp IRme() {
+		Ir irList = Ir.getInstance();
+		String startLabel = IrCommand.getFreshLabel("start");
+		String elseLabel = IrCommand.getFreshLabel("else");
+		String endLabel = IrCommand.getFreshLabel("end");
+
+		irList.AddIrCommand(new IrCommandLabel(startLabel));
+		irList.AddIrCommand(new IrCommandJumpIfEqZero(cond.IRme(), elseLabel));
+		if (ifBody != null) { ifBody.IRme(); }
+		irList.AddIrCommand(new IrCommandJumpLabel(endLabel));
+
+		irList.AddIrCommand(new IrCommandLabel(elseLabel));
+		if (elseBody != null) { elseBody.IRme(); }
+
+		irList.AddIrCommand(new IrCommandLabel(endLabel));
+
 		return null;
 	}
 
