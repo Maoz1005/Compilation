@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ir.Ir;
-import cfg.CFG
+import cfg.CFG;
 import java_cup.runtime.Symbol;
 import ast.*;
 
@@ -65,7 +65,7 @@ public class Main
 			/**********************/
 			/* [8] IR the AST ... */
 			/**********************/
-			ast.irMe();
+			ast.IRme();
 			cfg = new CFG(Ir.getInstance().getCommands());
 			writeUndeclaredToFile(cfg, outputFileName);
 			System.out.println("End of declaration analysis");
