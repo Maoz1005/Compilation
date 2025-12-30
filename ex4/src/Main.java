@@ -9,12 +9,10 @@ import cfg.CFG;
 import java_cup.runtime.Symbol;
 import ast.*;
 
-public class Main
-{
+public class Main {
 	public static String outputFileName = null;
 
-	static public void main(String argv[])
-	{
+	static public void main(String argv[]) {
 		Lexer l;
 		Parser p;
 		Symbol s;
@@ -25,8 +23,7 @@ public class Main
 		String inputFileName = argv[0];
 		String outputFileName = argv[1];
 
-		try
-		{
+		try {
 			/********************************/
 			/* [1] Initialize a file reader */
 			/********************************/
@@ -67,13 +64,14 @@ public class Main
 			/**********************/
 			ast.IRme();
 			cfg = new CFG(Ir.getInstance().getCommands());
-			writeUndeclaredToFile(cfg, outputFileName);
-			System.out.println("End of declaration analysis");
 
 			/**************************/
-			/* [9] Close output file */
+			/* [8.5] Close PrintWriter before writing */
 			/**************************/
 			fileWriter.close();
+
+			writeUndeclaredToFile(cfg, outputFileName);
+			System.out.println("End of declaration analysis");
 
 			/*************************************/
 			/* [10] Finalize AST GRAPHIZ DOT file */
@@ -81,8 +79,7 @@ public class Main
 			AstGraphviz.getInstance().finalizeFile();
 		}
 
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -95,8 +92,7 @@ public class Main
 			if (undeclaredCount == 0) {
 				writer.write("!OK");
 				System.out.println("\n ALL VARIABLES DECLARED!");
-			}
-			else {
+			} else {
 				System.out.println("\n UNDECLARED VARIABLES:");
 				List<String> undeclaredVars = new ArrayList<>(cfg.uninitializedVars);
 				Collections.sort(undeclaredVars); // Lex sort apparently
@@ -110,8 +106,7 @@ public class Main
 				}
 			}
 			writer.close();
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			System.out.println("ERROR WHEN OPENING FILE.");
 			e.printStackTrace();
 		}
@@ -128,23 +123,18 @@ public class Main
 				} else {
 					writer.write("ERROR");
 				}
-			}
-			else if (status.equals("SUCCESS")) {
+			} else if (status.equals("SUCCESS")) {
 				writer.write("OK");
 				System.out.println("\n SUCCESS!");
-			}
-			else {
+			} else {
 				writer.close();
 				throw new IOException("Incorrect status code when writing to file.");
 			}
 
 			writer.close();
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			System.out.println("ERROR WHEN OPENING FILE.");
 			e.printStackTrace();
 		}
 	}
 }
-
-
