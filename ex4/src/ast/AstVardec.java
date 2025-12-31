@@ -5,6 +5,8 @@ import types.TypeArray;
 import types.TypeClass;
 import types.TypeNil;
 import types.TypeVoid;
+import temp.Temp;
+import ir.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -103,4 +105,20 @@ public class AstVardec extends AstDec{
         throwException("Expression does not inherit from variable's class");
     }
 }
+
+
+  @Override
+  public Temp IRme() {
+        IrCommand commandAlloc = new IrCommandAllocate(this.id); 
+        Ir.getInstance().AddIrCommand(commandAlloc);
+    
+        if (this.exp != null) {
+            Temp srcTemp = this.exp.IRme();
+            
+            IrCommand commandStore = new IrCommandStore(this.id, srcTemp);
+            Ir.getInstance().AddIrCommand(commandStore);
+        }
+        return null;
+  }
+
 }

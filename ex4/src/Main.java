@@ -1,5 +1,10 @@
 import java.io.*;
-import java.io.PrintWriter;
+
+import ir.IrCommand;
+import ir.Ir;
+import ir.IrCommand;
+import cfg.CFGBlock;
+import ir.IrCommand;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

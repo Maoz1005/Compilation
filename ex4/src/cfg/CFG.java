@@ -117,25 +117,30 @@ public class CFG {
         return blocks;
     }
 
-
-    private void addVarOrTemp(IrCommand command, Set<String> nameSet) {
-        String name = null;
-        if (command instanceof IrCommandStore)
-            name = ((IrCommandStore) command).varName;
-        else if (command instanceof IrCommandLoad)
-            name = TEMP_CHAR + ((IrCommandLoad) command).dst.getSerialNumber();
-        else if (command instanceof IrCommandBinop)
-            name = TEMP_CHAR + ((IrCommandBinop) command).dst.getSerialNumber();
-        else if (command instanceof IrCommandAllocate)
-            name = ((IrCommandAllocate) command).var_name;
-        else if (command instanceof IrCommandConstInt)
-            name = TEMP_CHAR + ((IrCommandConstInt) command).t.getSerialNumber();
-
-
-        if (name == null) return;
-
-        nameSet.add(name);
+    private void addVarOrTemp(IrCommand command, Set<String> nameSet) {  
+    if (command instanceof IrCommandStore) {
+        IrCommandStore store = (IrCommandStore) command;
+        nameSet.add(store.varName);                       
+        nameSet.add(TEMP_CHAR + store.src.getSerialNumber()); 
+    } 
+    else if (command instanceof IrCommandLoad) {
+        IrCommandLoad load = (IrCommandLoad) command;
+        nameSet.add(TEMP_CHAR + load.dst.getSerialNumber()); 
+        nameSet.add(load.varName);                          
+    } 
+    else if (command instanceof IrCommandBinop) {
+        IrCommandBinop binop = (IrCommandBinop) command;
+        nameSet.add(TEMP_CHAR + binop.dst.getSerialNumber());
+        nameSet.add(TEMP_CHAR + binop.t1.getSerialNumber());
+        nameSet.add(TEMP_CHAR + binop.t2.getSerialNumber());
+    } 
+    else if (command instanceof IrCommandAllocate) {
+        nameSet.add(((IrCommandAllocate) command).var_name);
+    } 
+    else if (command instanceof IrCommandConstInt) {
+        nameSet.add(TEMP_CHAR + ((IrCommandConstInt) command).t.getSerialNumber());
     }
+}
 
 
     private List<CFGBlock> getNodes(List<IrCommand> commands) {
