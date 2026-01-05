@@ -16,16 +16,8 @@ public class AstProgram extends AstNode{
     @Override
     public Type SemantMe() {
         for (AstDec dec : this.declarations) {
-            if (dec instanceof AstVardec) {
-                dec.SemantMe();
-            }
+            dec.SemantMe();
         }
-        for (AstDec dec : this.declarations) {
-            if (!(dec instanceof AstVardec)) {
-                dec.SemantMe();
-            }
-        }
-
         return null;
     }
 
@@ -42,16 +34,8 @@ public class AstProgram extends AstNode{
     @Override
     public Temp IRme() {
         for (AstDec dec : this.declarations) {
-            if (dec instanceof AstVardec) {
-                dec.IRme();
-            }
+            dec.IRme();
         }
-        for (AstDec dec : this.declarations) {
-            if (!(dec instanceof AstVardec)) {
-                dec.IRme();
-            }
-        }
-
         return null;
     }
 }
