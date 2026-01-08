@@ -34,7 +34,14 @@ public class AstProgram extends AstNode{
     @Override
     public Temp IRme() {
         for (AstDec dec : this.declarations) {
-            dec.IRme();
+            if (dec instanceof AstVardec) {
+                dec.IRme();
+            }
+        }
+        for (AstDec dec : this.declarations) {
+            if (!(dec instanceof AstVardec)) {
+                dec.IRme();
+            }
         }
         return null;
     }
